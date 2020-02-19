@@ -11,6 +11,7 @@ net_total_amount = 0
 sum_of_changes = 0
 total_change = 0
 average_changes = 0 
+counter = 1
 # greatest increase in profits (date and amount) over the entire period
 # greatest decrease in losses (date and amount) over the entire period
 comparisons = {
@@ -39,6 +40,9 @@ with open(csvpath, newline='') as csvfile:
             month_count += 1
             net_total_amount += int(row[1])
             total_change = int(row[1]) - previous_pl_value
+   
+            if counter >= 2:
+                sum_of_changes += total_change
 
             if total_change > int(comparisons["greatest_increase"]):
                 comparisons["greatest_increase"] = total_change
@@ -47,10 +51,11 @@ with open(csvpath, newline='') as csvfile:
                 comparisons["greatest_decrease"] = total_change
                 comparisons["greatest_decrease_date"] = row[0]
                     
-            sum_of_changes += total_change
+            
             previous_pl_value = int(row[1])
+            counter += 1
 
-        average_changes = sum_of_changes/month_count 
+    average_changes = sum_of_changes/(month_count -2)
 
 
     print(f"total months: {month_count}")
