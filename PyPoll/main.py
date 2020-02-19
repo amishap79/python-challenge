@@ -37,10 +37,13 @@ with open(csvpath, newline='') as csvfile:
         # calcuate percentage of votes received for candidate(i.e. item)
         candidates[item]["pecentage_of_votes"] = round(candidates[item]["cand_total_votes"] / total_votes * 100, 5)
 
-# # Winner = max(candidates[x]["cand_total_votes"] for x in candidates)
-# max_votes = 0
-# Winner = [x for x in candidates if candidates[x]["cand_total_votes"] > max_votes]
 
+max_votes = 0
+winner = {}
+for item2 in candidates.keys():
+    if candidates[item2]["cand_total_votes"] > max_votes:
+        max_votes = candidates[item2]["cand_total_votes"]
+        winner = item2
 
 print('Election Results')
 print('-----------------------------')
@@ -49,18 +52,18 @@ print('-----------------------------')
 for item2 in candidates.keys(): 
     print(f'{item2}: {candidates[item2]["pecentage_of_votes"]}% ({candidates[item2]["cand_total_votes"]})')
 print('-----------------------------')
-
-# print(Winner)
+print(f'Winner: {winner}')
 print('-----------------------------')
 
 
 # Open the file using "write" mode. Specify the variable to hold the contents
 txtfile = open("Resources/election_data_results.txt", "w+")
-txtfile.write('Election Results')
-txtfile.write('-----------------------------')
-txtfile.write(f'Total Votes: {total_votes}')
-txtfile.write('-----------------------------')
+txtfile.write('Election Results\n')
+txtfile.write('-----------------------------\n')
+txtfile.write(f'Total Votes: {total_votes}\n')
+txtfile.write('-----------------------------\n')
 for item2 in candidates.keys(): 
-    txtfile.write(f'{item2}: {candidates[item2]["pecentage_of_votes"]}% ({candidates[item2]["cand_total_votes"]})')
-txtfile.write('-----------------------------')
-txtfile.write('-----------------------------')
+    txtfile.write(f'{item2}: {candidates[item2]["pecentage_of_votes"]}% ({candidates[item2]["cand_total_votes"]})\n')
+txtfile.write('-----------------------------\n')
+txtfile.write(f'Winner: {winner}\n')
+txtfile.write('-----------------------------\n')
